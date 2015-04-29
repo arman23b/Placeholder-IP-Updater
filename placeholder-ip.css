@@ -1,1 +1,14 @@
 /* CSS declarations go here */
+
+body {
+  text-align: center;
+  font-family: "sans-serif";
+}
+
+h1 {
+  text-align: center
+}
+
+div {
+  text-align: center
+}

@@ -1,4 +1,4 @@
-var Ips = new Mongo.Collection("ips");
+Ips = new Mongo.Collection("ips");
 
 
 if (Meteor.isClient) {
@@ -10,9 +10,9 @@ if (Meteor.isClient) {
     ip: function () {
       var ip = Ips.findOne({});
       if (ip != null) {
-        return ip.KEY;
+        return "Current Web Server IP Address is <a href=\"" + ip.KEY + "\">" + ip.KEY + "</a>";
       }
-      return "UNDEFINED";
+      return "Web Server is not online!";
     }
   });
 
