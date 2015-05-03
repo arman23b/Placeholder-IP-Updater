@@ -9,8 +9,12 @@ if (Meteor.isClient) {
   Template.ip.helpers({
     ip: function () {
       var ip = Ips.findOne({});
-      if (ip != null) {
-        return "Current Web Server IP Address is <a href=\"" + ip.KEY + "\">" + ip.KEY + "</a>";
+      if (ip != null && ip.KEY != null) {
+        var html = "Current Web Server IP Address is <a href=\"" + ip.KEY + "\">" + ip.KEY + "</a>";
+        if (ip.TIME != null) {
+          html += "<div>Last Updated on " + ip.TIME + "</div>";
+        }
+        return html;
       }
       return "Web Server is not online!";
     }
@@ -28,9 +32,9 @@ if (Meteor.isServer) {
     var data = JSON.parse(req.body.data);
     var ip = Ips.findOne({});
     if (ip == null) {
-      Ips.insert({KEY: data["ip"]});
+      Ips.insert({KEY: data["ip"], TIME: new Date()});
     } else {
-      Ips.update(ip._id, {$set: {KEY: data["ip"]}});
+      Ips.update(ip._id, {$set: {KEY: data["ip"], TIME: new Date()}});
     }
     res.end("");
   });
